@@ -1,0 +1,271 @@
+
+--MAIN (MADE BY sussy)
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("close range#7417 roblox xsummoning", "DarkTheme")
+local Tab = Window:NewTab("Main")
+local Section = Tab:NewSection("Main")
+Section:NewButton("Infinite Yield", "Admin", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+end)
+
+Section:NewToggle("sonic", "sonic", function(state)
+    if state then
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 150
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 150
+    else
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+    end
+end)
+
+
+--LOCAL PLAYER
+local BIGBLACKBALLS Tab = Window:NewTab("Local Player")
+local BIGBLACKBALLSSection = Tab:NewSection("Local Player")
+BIGBLACKBALLSSection:NewSlider("SPEED", "SPEED", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+    
+end)
+BIGBLACKBALLSSection:NewSlider("JUMP", "JUMP", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+    
+end)
+
+
+Section:NewButton("CAMLOCK", "CAMLOCK", function()
+    wait(3)
+    getgenv().Settings = {
+        Key = "Q",
+        Enabled = true,
+        Pred = 5,
+        Part = "Head",
+        Smoothness = 0.0085
+    }
+    
+    local CC = game.Workspace.CurrentCamera
+    local Mouse = game.Players.LocalPlayer:GetMouse()
+    local Plr
+    
+    
+    Mouse.KeyDown:Connect(function(Key)
+        local Keybind = getgenv().Settings.Key:lower()
+        if (Key == Keybind) then
+            if getgenv().Settings.Enabled == true then
+                IsTargetting = not IsTargetting
+                if IsTargetting then
+                    Plr = GetClosest()
+                else
+                    if Plr ~= nil then
+                        Plr = nil
+                    end
+                end
+            end
+        end
+    end)
+    
+    function GetClosest()
+        local closestPlayer
+        local shortestDistance = math.huge
+        for i, v in pairs(game.Players:GetPlayers()) do
+            pcall(function()
+    
+                if v ~= game.Players.LocalPlayer and v.Character and
+                    v.Character:FindFirstChild("Humanoid") then
+                    local pos = CC:WorldToViewportPoint(v.Character.PrimaryPart.Position)
+                    local magnitude =
+                    (Vector2.new(pos.X, pos.Y) - Vector2.new(Mouse.X, Mouse.Y)).magnitude
+                    if (Vector2.new(pos.X, pos.Y) - Vector2.new(Mouse.X, Mouse.Y)).magnitude < shortestDistance then
+                        closestPlayer = v
+                        shortestDistance = magnitude
+                    end
+                end
+            end)
+        end
+        return closestPlayer
+    end
+    
+    local function IsOnScreen(Object)
+        local IsOnScreen = game.Workspace.CurrentCamera:WorldToScreenPoint(Object.Position)
+        return IsOnScreen
+    end
+    
+    local function Filter(Object)
+        if string.find(Object.Name, "Gun") then
+            return
+        end
+        if Object:IsA("Part") or Object:IsA("MeshPart") then
+            return true
+        end
+    end
+    
+    local function WTSPos(Position)
+        local ObjectVector = game.Workspace.CurrentCamera:WorldToScreenPoint(Position)
+        return Vector2.new(ObjectVector.X, ObjectVector.Y)
+    end
+    
+    local function WTS(Object)
+        local ObjectVector = game.Workspace.CurrentCamera:WorldToScreenPoint(Object.Position)
+        return Vector2.new(ObjectVector.X, ObjectVector.Y)
+    end
+    
+    function GetNearestPartToCursorOnCharacter(character)
+        local ClosestDistance = math.huge
+        local BodyPart = nil
+    
+        if (character and character:GetChildren()) then
+            for k,  x in next, character:GetChildren() do
+                if Filter(x) and IsOnScreen(x) then
+                    local Distance = (WTS(x) - Vector2.new(Mouse.X, Mouse.Y)).Magnitude
+        
+                    if Distance < ClosestDistance then
+                        ClosestDistance = Distance
+                        BodyPart = x
+                    end
+                end
+            end
+        end
+    
+        return BodyPart
+    end
+    
+    game.RunService.Heartbeat:Connect(function()
+        if getgenv().Settings.Enabled == true then
+            local Main = CFrame.new(CC.CFrame.p,Plr.Character[getgenv().Settings.Part].Position + Plr.Character[getgenv().Settings.Part].Velocity / getgenv().Settings.Pred)
+            CC.CFrame = CC.CFrame:Lerp(Main, getgenv().Settings.Smoothness, Enum.EasingStyle.Elastic, Enum.EasingDirection.InOut,Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
+        end
+    end)
+    
+    task.spawn(function()
+        while task.wait() do
+            if getgenv().Settings.Enabled and Plr ~= nil and (Plr.Character) then
+                getgenv().Settings.Part = tostring(GetNearestPartToCursorOnCharacter(Plr.Character))
+            end
+        end
+    end)
+end)
+
+
+--PET SIMULATOR X
+Section:NewButton("(MUST HAVE PET IN BANK FIRST) PSX)", "IT CHANGES YOUR PET", function()
+    local Library = loadstring(game:HttpGet("https://pastebin.com/Qxzptd3W"))()
+end)
+
+
+--KEYBIND
+local KEYBIND Tab = Window:NewTab("KEYBIND")
+local KEYBINDSection = Tab:NewSection("KEYBIND")
+KEYBINDSection:NewKeybind("keybind", "keybind", Enum.KeyCode.F, function()
+	Library:ToggleUI()
+end)
+
+
+--CHICBLOCKO
+
+Section:NewButton("GUI", "GUI", function()
+
+    loadstring(game:HttpGet("https://gist.githubusercontent.com/Shag420/c2c977038fda713ef495eeea580a7662/raw"))()
+
+end)
+--KAT
+
+Section:NewButton("KAT GUI", "just a kat gui", function()
+    loadstring(game:HttpGet(('https://raw.githubusercontent.com/scripts4roblox/script/main/hub'),true))()
+end)
+
+
+--BROOKHAVEN
+local BROOK Tab = Window:NewTab("BROOKHAVEN")
+local BROOKSection = Tab:NewSection("BROOKHAVEN")
+Section:NewButton("ICEMAIL GUI", "COOL", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMael7/NewIceHub/main/Brookhaven"))()
+end)
+
+
+--MURDER MYSTERY 2
+
+Section:NewButton("mm2", "mm2", function()
+    loadstring(game:HttpGet(("https://pastebin.com/raw/mT10xnt7"), true))()
+end)
+
+
+--FF2
+
+Section:NewButton("good gui", "GUI", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/PoogFoogYT/FF2/main/Frog"))()
+end)
+
+
+--Ultimate Chaos
+
+Section:NewButton("CHAOS HUB", "yes", function()
+    loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\34\104\116\116\112\115\58\47\47\112\115\116\46\107\108\103\114\116\104\46\105\111\47\112\97\115\116\101\47\99\116\114\102\115\47\114\97\119\34\41\41\40\41\10")()
+end)
+
+
+--ARSENAL
+
+Section:NewButton("ARSENAL", "HACK", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/AstroPublic/arsenal/main/Arsenal-obfuscated.lua'))()
+end)
+
+
+Section:NewButton("grow", "grow", function()
+    local LocalPlayer = game:GetService("Players").LocalPlayer
+    local Character = LocalPlayer.Character
+    local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+    
+    function rm()
+        for i,v in pairs(Character:GetDescendants()) do
+            if v:IsA("BasePart") then
+                if v.Name == "Handle" or v.Name == "Head" then
+                    if Character.Head:FindFirstChild("OriginalSize") then
+                        Character.Head.OriginalSize:Destroy()
+                    end
+                else
+                    for i,cav in pairs(v:GetDescendants()) do
+                        if cav:IsA("Attachment") then
+                            if cav:FindFirstChild("OriginalPosition") then
+                                cav.OriginalPosition:Destroy()  
+                            end
+                        end
+                    end
+                    v:FindFirstChild("OriginalSize"):Destroy()
+                    if v:FindFirstChild("AvatarPartScaleType") then
+                        v:FindFirstChild("AvatarPartScaleType"):Destroy()
+                    end
+                end
+            end
+        end
+    end
+    
+    rm()
+    wait(0.5)
+    Humanoid:FindFirstChild("BodyProportionScale"):Destroy()
+    wait(1)
+    
+    rm()
+    wait(0.5)
+    Humanoid:FindFirstChild("BodyHeightScale"):Destroy()
+    wait(1)
+    
+    rm()
+    wait(0.5)
+    Humanoid:FindFirstChild("BodyWidthScale"):Destroy()
+    wait(1)
+    
+    rm()
+    wait(0.5)
+    Humanoid:FindFirstChild("BodyDepthScale"):Destroy()
+    wait(1)
+    
+    rm()
+    wait(0.5)
+    Humanoid:FindFirstChild("HeadScale"):Destroy()
+    wait(1)
+end)
+
+
+--unfair gui
+Section:NewButton("unfair hub", "HACK", function()
+    loadstring(game:HttpGet(('https://raw.githubusercontent.com/rblxscriptsnet/unfair/main/rblxhub.lua'),true))()
+end)
